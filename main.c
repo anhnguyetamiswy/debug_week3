@@ -7,7 +7,6 @@
     char hoTen[50];
     double diemTB;
     };
-//debugging done by anhnguyet
     int main() {
     //struct SinhVien sv1 = { 1234, "Nguyen Van A", 8.0};
     struct SinhVien sv2;
@@ -20,4 +19,5 @@
     scanf("%lf", &sv2.diemTB);
     return 0;
     }
+
 
