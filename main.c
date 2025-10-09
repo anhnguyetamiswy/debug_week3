@@ -11,7 +11,7 @@ int main() {
     for (i = 1; i <= n; i++) {
         sum = sum + i;
     }
-
+    //debugging by anhnguyet
     printf("Tong cac so tu 1 den %d la: %d\n", n, sum);
 
 
@@ -22,3 +22,4 @@ int main() {
 
     return 0;
 }
+
