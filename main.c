@@ -1,23 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <string.h>
-    struct SinhVien {
-    int mssv;
-    char hoTen[50];
-    double diemTB;
-    };
-    int main() {
-    //struct SinhVien sv1 = { 1234, "Nguyen Van A", 8.0};
-    struct SinhVien sv2;
-    ptintf("\n hay nhap thong tin sinh vien 2");
-    printf("\n Hay nhap ho ten sinh vien 2: ");
-    fgets(sv2.hoTen, 50, stdin);
-    printf("\n Hay nhap mssv: ");
-    scanf("%d", &sv2.mssv);
-    printf("\n Hay nhap diem trung binh: ");
-    scanf("%lf", &sv2.diemTB);
-    return 0;
+
+int main() {
+    int n, i;
+    int sum = 0;
+
+    printf("Nhap mot so nguyen duong n: ");
+    scanf("%d", &n);
+
+    // Tinh tong cac so tu 1 den n
+    for (i = 1; i <= n; i++) {
+        sum = sum + i;
     }
 
+    printf("Tong cac so tu 1 den %d la: %d\n", n, sum);
 
+
+    if (sum % 2 == 0)
+        printf("Tong la so chan!\n");
+    else
+        printf("Tong la so le!\n");
+
+    return 0;
+}
