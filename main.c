@@ -1,25 +1,34 @@
 #include <stdio.h>
 
-int main() {
-    int n, i;
-    int sum = 0;
-
-    printf("Nhap mot so nguyen duong n: ");
-    scanf("%d", &n);
-
-    // Tinh tong cac so tu 1 den n
-    for (i = 1; i <= n; i++) {
-        sum = sum + i;
+void bubbleSort(int a[], int n) {
+    int i, j, temp;
+    for (i = 0; i < n - 1; i++) {
+        printf("\nVong lap thu %d:\n", i + 1);
+        for (j = 0; j < n - i - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+            // In mang sau moi lan so sanh6
+            for (int k = 0; k < n; k++)
+                printf("%d ", a[k]);
+            printf("\n");
+        }
     }
-    //debugging by anhnguyet
-    printf("Tong cac so tu 1 den %d la: %d\n", n, sum);
-
-
-    if (sum % 2 == 0)
-        printf("Tong la so chan!\n");
-    else
-        printf("Tong la so le!\n");
-
-    return 0;
 }
 
+int main() {
+    int n, a[100];
+    printf("Nhap so phan tu: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("a[%d] = ", i);
+        scanf("%d", &a[i]);
+    }
+    bubbleSort(a, n);
+    printf("\nMang sau khi sap xep: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    return 0;
+}
