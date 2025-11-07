@@ -1,34 +1,46 @@
 #include <stdio.h>
 
-void bubbleSort(int a[], int n) {
-    int i, j, temp;
-    for (i = 0; i < n - 1; i++) {
-        printf("\nVong lap thu %d:\n", i + 1);
-        for (j = 0; j < n - i - 1; j++) {
-            if (a[j] > a[j + 1]) {
-                temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
-            }
-            // In mang sau moi lan so sanh6
-            for (int k = 0; k < n; k++)
-                printf("%d ", a[k]);
-            printf("\n");
+void printArray(int a[], int n) {
+    for(int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+}
+
+void swap(int *x, int *y) {
+    int t = *x;
+    *x = *y;
+    *y = t;
+}
+
+int partition(int a[], int low, int high, int n) {
+    int pivot = a[high];
+    int i = low - 1;
+
+    for(int j = low; j < high; j++) {
+        if(a[j] <= pivot) {
+            i++;
+            swap(&a[i], &a[j]);
+            printArray(a, n);   // In sau mỗi lần swap
         }
+    }
+    swap(&a[i+1], &a[high]);
+    printArray(a, n);           // In pivot về đúng vị trí
+    return i+1;
+}
+
+void quicksort(int a[], int low, int high, int n) {
+    if(low < high) {
+        int p = partition(a, low, high, n);
+        quicksort(a, low, p-1, n);
+        quicksort(a, p+1, high, n);
     }
 }
 
 int main() {
-    int n, a[100];
-    printf("Nhap so phan tu: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("a[%d] = ", i);
-        scanf("%d", &a[i]);
-    }
-    bubbleSort(a, n);
-    printf("\nMang sau khi sap xep: ");
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
-    return 0;
+    int a[] = {33,10,55,71,29,3,18,92};
+    int n = sizeof(a)/sizeof(a[0]);
+    printf("Quicksort steps:\n");
+    quicksort(a,0,n-1,n);
+    printf("Final result:\n");
+    printArray(a,n);
 }
