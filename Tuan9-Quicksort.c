@@ -44,3 +44,7 @@ int main() {
     printf("Final result:\n");
     printArray(a,n);
 }
+
+
+//Do phuc tap: Best case: O(nlogn), Average case: O(nlogn), Worst case: O(n^2)
+
