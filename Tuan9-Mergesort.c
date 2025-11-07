@@ -52,3 +52,6 @@ int main() {
     printf("Final result:\n");
     printArray(a,n);
 }
+
+//Do phuc tap: O(nlogn)
+
