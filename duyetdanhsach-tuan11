@@ -1,0 +1,113 @@
+//duyet danh sach
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct SinhVien {
+    string hoten;
+    string mssv;
+    int namsinh;
+    double gpa;
+};
+
+struct Node {
+    SinhVien data;
+    Node* next;
+};
+
+// Tao node moi
+Node* taoNode(SinhVien sv) {
+    Node* p = new Node;
+    p->data = sv;
+    p->next = nullptr;
+    return p;
+}
+
+// chen node moi vao cuoi danh sach
+void themCuoi(Node*& head, SinhVien sv) {
+    Node* p = taoNode(sv);
+    if (!head) {
+        head = p;
+        return;
+    }
+    Node* temp = head;
+    while (temp->next != nullptr)
+        temp = temp->next;
+    temp->next = p;
+}
+
+// duyet danh sach
+void duyetDanhSach(Node* head) {
+    Node* temp = head;
+    while (temp) {
+        cout << "Ho ten : " << temp->data.hoten << endl;
+        cout << "MSSV   : " << temp->data.mssv << endl;
+        cout << "Nam sinh: " << temp->data.namsinh << endl;
+        cout << "GPA    : " << temp->data.gpa << "\n\n";
+        temp = temp->next;
+    }
+}
+
+// Tính chiều dài
+int chieuDai(Node* head) {
+    int dem = 0;
+    Node* temp = head;
+    while (temp) {
+        dem++;
+        temp = temp->next;
+    }
+    return dem;
+}
+
+// Đếm GPA > 3.2
+int demGPAHon3_2(Node* head) {
+    int dem = 0;
+    Node* temp = head;
+    while (temp) {
+        if (temp->data.gpa > 3.2) dem++;
+        temp = temp->next;
+    }
+    return dem;
+}
+
+// sap xep tang dan selection sort
+void selectionSort(Node* head) {
+    for (Node* i = head; i != nullptr; i = i->next) {
+        Node* minNode = i;
+        for (Node* j = i->next; j != nullptr; j = j->next) {
+            if (j->data.gpa < minNode->data.gpa) {
+                minNode = j;
+            }
+        }
+        // Hoán đổi dữ liệu
+        swap(i->data, minNode->data);
+    }
+}
+
+int main() {
+    Node* head = nullptr;
+
+    // Tạo danh sách mẫu
+    themCuoi(head, {"Nguyen Van A", "SV001", 2006, 3.5});
+    themCuoi(head, {"Nguyen Van B", "SV002", 2006, 2.8});
+    themCuoi(head, {"Nguyen Van C", "SV003", 2006, 3.9});
+    themCuoi(head, {"Nguyen Van D", "SV004", 2006, 1.9});
+
+    cout << "Chieu dai danh sach: " << chieuDai(head) << endl;
+    cout << "So SV co GPA > 3.2: " << demGPAHon3_2(head) << endl;
+
+    // chen them sinh vien moi
+    SinhVien moi = {"Sinh Vien Moi", "SV999", 2005, 2.4};
+    themCuoi(head, moi);
+
+    cout << "\nDanh sach sau khi THEM SV moi:";
+    duyetDanhSach(head);
+
+    selectionSort(head);
+
+    cout << "\nDanh sach sau khi SAP XEP (Selection Sort) \n :";
+    duyetDanhSach(head);
+
+    return 0;
+}
