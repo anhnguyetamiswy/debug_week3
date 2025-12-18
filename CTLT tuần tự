@@ -1,0 +1,99 @@
+//cay voi cau truc luu tru tuan tu
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+//khai bao cau truc cay
+typedef struct {
+    char data[10];   
+    int used;        
+} Node;
+
+Node tree[MAX];
+
+//khoi tao cay
+void initTree() {
+    for (int i = 0; i < MAX; i++) {
+        tree[i].used = 0;
+    }
+}
+
+//kiem tra cay rong
+int isEmpty() {
+    return tree[1].used == 0;
+}
+
+//them nut goc
+void addRoot(char *value) {
+    strcpy(tree[1].data, value);
+    tree[1].used = 1;
+}
+
+//them con trai, con phai
+void addLeft(int parent, char *value) {
+    int left = 2 * parent;
+    if (tree[parent].used && left < MAX) {
+        strcpy(tree[left].data, value);
+        tree[left].used = 1;
+    }
+}
+
+void addRight(int parent, char *value) {
+    int right = 2 * parent + 1;
+    if (tree[parent].used && right < MAX) {
+        strcpy(tree[right].data, value);
+        tree[right].used = 1;
+    }
+}
+
+//duyet cay truoc
+void preOrder(int i) {
+    if (i >= MAX || tree[i].used == 0) return;
+    printf("%s ", tree[i].data);
+    preOrder(2 * i);
+    preOrder(2 * i + 1);
+}
+
+//duyet cay giua
+void inOrder(int i) {
+    if (i >= MAX || tree[i].used == 0) return;
+    inOrder(2 * i);
+    printf("%s ", tree[i].data);
+    inOrder(2 * i + 1);
+}
+
+//duyet cay sau
+void postOrder(int i) {
+    if (i >= MAX || tree[i].used == 0) return;
+    postOrder(2 * i);
+    postOrder(2 * i + 1);
+    printf("%s ", tree[i].data);
+}
+
+int main() {
+    initTree();
+
+    addRoot("A");
+
+    addLeft(1, "A.1");
+    addRight(1, "A.2");
+
+    addLeft(2, "A.1.1");
+    addRight(2, "A.1.2");
+
+    addLeft(3, "A.2.1");
+    addRight(3, "A.2.2");
+
+    printf("Duyet tien tu: ");
+    preOrder(1);
+
+    printf("\nDuyet trung tu: ");
+    inOrder(1);
+
+    printf("\nDuyet hau tu: ");
+    postOrder(1);
+
+    return 0;
+}
