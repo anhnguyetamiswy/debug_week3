@@ -1,0 +1,98 @@
+//cai dat cay voi cau truc luu tru moc noi
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//khai bao cay
+typedef struct Node {
+    char data[10];            // A, A.1, A.1.1,...
+    struct Node *left;        // con trái
+    struct Node *right;       // con phải
+} Node;
+
+//khoi tao cay
+Node* initTree() {
+    return NULL;
+}
+
+//kiem tra cay rong
+int isEmpty(Node *root) {
+    return root == NULL;
+}
+
+//tao nut moi
+Node* createNode(char *value) {
+    Node *p = (Node*)malloc(sizeof(Node));
+    if (p == NULL) return NULL;
+
+    strcpy(p->data, value);
+    p->left = NULL;
+    p->right = NULL;
+
+    return p;
+}
+
+
+//them nut con trai/con phai
+void addLeft(Node *parent, char *value) {
+    if (parent == NULL) return;
+    parent->left = createNode(value);
+}
+
+void addRight(Node *parent, char *value) {
+    if (parent == NULL) return;
+    parent->right = createNode(value);
+}
+
+//duyet cay truoc
+void preOrder(Node *root) {
+    if (root == NULL) return;
+    printf("%s ", root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+//duyet cay giua
+void inOrder(Node *root) {
+    if (root == NULL) return;
+    inOrder(root->left);
+    printf("%s ", root->data);
+    inOrder(root->right);
+}
+
+//duyet cay sau
+void postOrder(Node *root) {
+    if (root == NULL) return;
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%s ", root->data);
+}
+
+int main() {
+    Node *root = initTree();
+
+    // Tạo gốc
+    root = createNode("A");
+
+    // Mức 1
+    addLeft(root, "A.1");
+    addRight(root, "A.2");
+
+    // Mức 2
+    addLeft(root->left, "A.1.1");
+    addRight(root->left, "A.1.2");
+
+    addLeft(root->right, "A.2.1");
+    addRight(root->right, "A.2.2");
+
+    printf("Duyet tien tu: ");
+    preOrder(root);
+
+    printf("\nDuyet trung tu: ");
+    inOrder(root);
+
+    printf("\nDuyet hau tu: ");
+    postOrder(root);
+
+    return 0;
+}
