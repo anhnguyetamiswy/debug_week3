@@ -1,0 +1,65 @@
+//tuan 16-17: bai 2
+
+#include <iostream>
+
+using namespace std;
+
+//khai bao
+struct Nut {
+    int giaTri;
+    Nut* trai;
+    Nut* phai;
+
+    Nut(int x) {
+        giaTri = x;
+        trai = phai = nullptr;
+    }
+};
+
+//kiem tra 2 cay giong nhau
+bool kiemTraGiongNhau(Nut* cay1, Nut* cay2) {
+    if (cay1 == nullptr && cay2 == nullptr)
+        return true;
+
+    if (cay1 == nullptr || cay2 == nullptr)
+        return false;
+
+    if (cay1->giaTri != cay2->giaTri)
+        return false;
+
+    return kiemTraGiongNhau(cay1->trai, cay2->trai) &&
+           kiemTraGiongNhau(cay1->phai, cay2->phai);
+}
+
+//tao 2 cay bat ki
+Nut* taoCay1() {
+    Nut* goc = new Nut(1);
+    goc->trai = new Nut(2);
+    goc->phai = new Nut(3);
+    return goc;
+}
+
+Nut* taoCay2() {
+    Nut* goc = new Nut(1);
+    goc->trai = new Nut(2);
+    goc->phai = new Nut(3);
+    return goc;
+}
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    Nut* cay1 = taoCay1();
+    Nut* cay2 = taoCay2();
+
+    if (kiemTraGiongNhau(cay1, cay2))
+        cout << "Hai cay nhi phan giong het nhau";
+    else
+        cout << "Hai cay nhi phan KHONG giong nhau";
+
+    return 0;
+}
+
+
+
