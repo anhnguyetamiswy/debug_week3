@@ -1,0 +1,139 @@
+//bai 1: muc luc cua cuon sach
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Node {
+    string ten;
+    int soTrang;
+    vector<Node*> con;
+
+    Node(string _ten, int _soTrang) {
+        ten = _ten;
+        soTrang = _soTrang;
+    }
+};
+
+//dem so chuong cuon sach
+int demSoChuong(Node* root) {
+    if (root == nullptr) return 0;
+    return root->con.size();
+}
+
+//tinh so trang cua mot chuong
+int tongSoTrang(Node* node) {
+    if (node == nullptr) return 0;
+
+    int tong = node->soTrang;
+    for (Node* child : node->con) {
+        tong += tongSoTrang(child);
+    }
+    return tong;
+}
+
+//tim chuong dai nhat
+Node* timChuongDaiNhat(Node* root) {
+    if (root == nullptr) return nullptr;
+
+    Node* chuongMax = nullptr;
+    int maxTrang = -1;
+
+    for (Node* chuong : root->con) {
+        int tong = tongSoTrang(chuong);
+        if (tong > maxTrang) {
+            maxTrang = tong;
+            chuongMax = chuong;
+        }
+    }
+    return chuongMax;
+}
+
+
+//cap nhat lai so trang
+int capNhatSoTrang(Node* node) {
+    if (node == nullptr) return 0;
+
+    int tong = node->soTrang;
+    for (Node* child : node->con) {
+        tong += capNhatSoTrang(child);
+    }
+    node->soTrang = tong;
+    return tong;
+}
+
+
+//xoa muc theo ten
+bool xoaMuc(Node* node, string tenCanXoa) {
+    if (node == nullptr) return false;
+
+    for (int i = 0; i < node->con.size(); i++) {
+        if (node->con[i]->ten == tenCanXoa) {
+            delete node->con[i];
+            node->con.erase(node->con.begin() + i);
+            capNhatSoTrang(node);
+            return true;
+        }
+    }
+
+    for (Node* child : node->con) {
+        if (xoaMuc(child, tenCanXoa)) {
+            capNhatSoTrang(node);
+            return true;
+        }
+    }
+    return false;
+}
+
+//in cay cua 1 chuong bat ki
+void inDeMuc(Node* node, int level = 0) {
+    if (node == nullptr) return;
+
+    for (int i = 0; i < level; i++)
+        cout << "  ";
+    cout << "- " << node->ten << endl;
+
+    for (Node* child : node->con) {
+        inDeMuc(child, level + 1);
+    }
+}
+
+//tim chuong theo ten
+Node* timChuong(Node* root, string tenChuong) {
+    if (root == nullptr) return nullptr;
+
+    for (Node* chuong : root->con) {
+        if (chuong->ten == tenChuong)
+            return chuong;
+    }
+    return nullptr;
+}
+
+int main() {
+    Node* sach = new Node("Lap trinh C++", 0);
+
+    Node* c1 = new Node("Chuong 1", 10);
+    Node* c2 = new Node("Chuong 2", 15);
+
+    Node* s11 = new Node("Muc 1.1", 5);
+    Node* s12 = new Node("Muc 1.2", 3);
+
+    c1->con.push_back(s11);
+    c1->con.push_back(s12);
+
+    sach->con.push_back(c1);
+    sach->con.push_back(c2);
+
+    cout << "So chuong: " << demSoChuong(sach) << endl;
+
+    Node* maxChuong = timChuongDaiNhat(sach);
+    cout << "Chuong dai nhat: " << maxChuong->ten << endl;
+
+    cout << "De muc Chuong 1:" << endl;
+    inDeMuc(timChuong(sach, "Chuong 1"));
+
+    xoaMuc(sach, "Muc 1.1");
+
+    return 0;
+}
