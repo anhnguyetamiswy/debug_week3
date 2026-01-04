@@ -1,0 +1,64 @@
+//bai 2: kiem tra 2 cuon sach co phai ban copy cua nhau khong
+
+#include <iostream>
+
+using namespace std;
+
+//khai bao
+struct Node {
+    int index;
+    string ten;
+    Node* trai;
+    Node* phai;
+
+    Node(int _index, string _ten) {
+        index = _index;
+        ten = _ten;
+        trai = phai = nullptr;
+    }
+};
+
+bool kiemTraCopy(Node* T1, Node* T2) {
+    // neu ca 2 cay deu rong
+    if (T1 == nullptr && T2 == nullptr)
+        return true;
+
+    // mot cay rong mot cay khong rong
+    if (T1 == nullptr || T2 == nullptr)
+        return false;
+
+    // so sanh 2 thuoc tinh cua node
+    if (T1->index != T2->index || T1->ten != T2->ten)
+        return false;
+
+    // de quy xuong so sanh cay con
+    return kiemTraCopy(T1->trai, T2->trai) &&
+           kiemTraCopy(T1->phai, T2->phai);
+}
+
+//tao cay vidu
+Node* taoCay1() {
+    Node* root = new Node(1, "Chuong 1");
+    root->trai = new Node(2, "Muc 1.1");
+    root->phai = new Node(3, "Muc 1.2");
+    return root;
+}
+
+Node* taoCay2() {
+    Node* root = new Node(1, "Chuong 1");
+    root->trai = new Node(2, "Muc 1.1");
+    root->phai = new Node(3, "Muc 1.2");
+    return root;
+}
+
+int main() {
+    Node* sach1 = taoCay1();
+    Node* sach2 = taoCay2();
+
+    if (kiemTraCopy(sach1, sach2))
+        cout << "Hai cuon sach la ban copy cua nhau";
+    else
+        cout << "Hai cuon sach KHONG phai ban copy";
+
+    return 0;
+}
