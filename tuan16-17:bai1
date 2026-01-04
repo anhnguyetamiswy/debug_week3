@@ -1,0 +1,102 @@
+//tuan 16-17 bai 1
+
+#include <iostream>
+using namespace std;
+
+//khai bao
+struct Nut {
+    int giaTri;
+    Nut* trai;
+    Nut* phai;
+
+    Nut(int x) {
+        giaTri = x;
+        trai = phai = nullptr;
+    }
+};
+
+//tao cay
+Nut* taoCay() {
+    Nut* goc = new Nut(4);
+
+    goc->trai = new Nut(1);
+    goc->phai = new Nut(3);
+
+    goc->trai->trai = new Nut(2);
+    goc->trai->phai = new Nut(16);
+
+    goc->phai->trai = new Nut(9);
+    goc->phai->phai = new Nut(10);
+
+    goc->trai->trai->trai = new Nut(14);
+    goc->trai->trai->phai = new Nut(8);
+
+    goc->trai->phai->trai = new Nut(7);
+
+    return goc;
+}
+
+//duyet truoc
+void duyetTruoc(Nut* goc) {
+    if (goc == nullptr) return;
+    cout << goc->giaTri << " ";
+    duyetTruoc(goc->trai);
+    duyetTruoc(goc->phai);
+}
+
+//duyet giua
+void duyetGiua(Nut* goc) {
+    if (goc == nullptr) return;
+    duyetGiua(goc->trai);
+    cout << goc->giaTri << " ";
+    duyetGiua(goc->phai);
+}
+
+//duyet sau
+void duyetSau(Nut* goc) {
+    if (goc == nullptr) return;
+    duyetSau(goc->trai);
+    duyetSau(goc->phai);
+    cout << goc->giaTri << " ";
+}
+
+//ham vun dong
+void vunDong(Nut* goc) {
+    if (goc == nullptr) return;
+
+    vunDong(goc->trai);
+    vunDong(goc->phai);
+
+    Nut* nutMax = goc;
+
+    if (goc->trai && goc->trai->giaTri > nutMax->giaTri)
+        nutMax = goc->trai;
+
+    if (goc->phai && goc->phai->giaTri > nutMax->giaTri)
+        nutMax = goc->phai;
+
+    if (nutMax != goc) {
+        swap(goc->giaTri, nutMax->giaTri);
+        vunDong(nutMax);
+    }
+}
+
+int main() {
+    Nut* goc = taoCay();
+
+    cout << "Duyet truoc: ";
+    duyetTruoc(goc);
+
+    cout << "\nDuyet giua: ";
+    duyetGiua(goc);
+
+    cout << "\nDuyet sau: ";
+    duyetSau(goc);
+
+    vunDong(goc);
+
+    cout << "\n\nSau khi vun dong (duyet truoc): ";
+    duyetTruoc(goc);
+
+    return 0;
+}
