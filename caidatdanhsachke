@@ -1,0 +1,62 @@
+//danh sach lien ke
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int dinhKe;
+    Node* next;
+};
+
+Node* danhSachKe[12];
+
+void khoiTaoDoThi() {
+    for (int i = 1; i <= 11; i++) {
+        danhSachKe[i] = NULL;
+    }
+}
+
+void themCanh(int u, int v) {
+    Node* node1 = new Node;
+    node1->dinhKe = v;
+    node1->next = danhSachKe[u];
+    danhSachKe[u] = node1;
+
+    Node* node2 = new Node;
+    node2->dinhKe = u;
+    node2->next = danhSachKe[v];
+    danhSachKe[v] = node2;
+}
+
+void inDanhSach() {
+    for (int i = 1; i <= 11; i++) {
+        cout << i << ": ";
+        Node* chay = danhSachKe[i];
+        while (chay != NULL) {
+            cout << chay->dinhKe << " ";
+            chay = chay->next;
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    khoiTaoDoThi();
+
+    themCanh(1, 2);
+    themCanh(1, 6);
+    themCanh(1, 7);
+    themCanh(1, 8);
+    themCanh(1, 9);
+    themCanh(1, 10);
+    themCanh(2, 3);
+    themCanh(2, 11);
+    themCanh(3, 4);
+    themCanh(4, 5);
+    themCanh(4, 6);
+    themCanh(5, 6);
+    themCanh(10, 11);
+
+    inDanhSach();
+    return 0;
+}
