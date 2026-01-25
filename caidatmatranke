@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+
+#define n 11
+int maTranKe[100][100];
+
+void khoiTaoMaTran(){
+	int i, j;
+	for(i=1;i<=n;i++){
+		for(j=1; j<=n; j++){
+			mt[i][j]=0;
+		}
+	}
+}
+
+void Add_maTran(int x, int y){
+	mt[x][y] = 1;
+	mt[y][x] = 1;
+}
+
+void (){
+	int i, j;
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			cout << mt[i][j] << " ";
+		}
+		cout << endl;
+	}	
+}
+
+int main(){
+	khoiTaoMaTran();
+	
+	Add_maTran(1,2);
+	Add_maTran(2,11);
+	Add_maTran(11,10);
+	Add_maTran(1,10);
+	Add_maTran(1,9);
+	Add_maTran(1,8);
+	Add_maTran(1,7);
+	Add_maTran(1,6);
+	Add_maTran(6,5);
+	Add_maTran(5,4);
+	Add_maTran(6,4);
+	Add_maTran(4,3);
+	Add_maTran(2,3);
+	
+	hienThi();
+}
